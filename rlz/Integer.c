@@ -14,7 +14,7 @@ void intPrint(const void* data) {
     printf("%d", *(const int*)data);
 }
 
-void intabs(const void* arg, void* result){
+void intAbs(const void* arg, void* result){
     int* i1 = (int*)arg;
     double* absResult = (double*)result;
 
@@ -29,7 +29,7 @@ TypeInfo* GetIntTypeInfo() {
         INT_TYPE_INFO->add = intAdd;
         INT_TYPE_INFO->multiply = intMultiply;
         INT_TYPE_INFO->print = intPrint;
-        INT_TYPE_INFO->abs = intabs;
+        INT_TYPE_INFO->abs = intAbs;
     }
     return INT_TYPE_INFO;
 }

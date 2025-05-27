@@ -5,7 +5,7 @@
 #include "VectorErrors.h"
 #include <math.h>
 
-VectorList* create_vector_list() {
+VectorList* createVectorList() {
     VectorList* list = malloc(sizeof(VectorList));
     list->size = 0;
     list->capacity = 4;
@@ -13,7 +13,7 @@ VectorList* create_vector_list() {
     return list;
 }
 
-void push_vector(VectorList* list, Vector* vector) {
+void pushVector(VectorList* list, Vector* vector) {
     if (list->size >= list->capacity) {
         list->capacity *= 2;
         list->items = realloc(list->items, sizeof(Vector*) * list->capacity);
@@ -21,9 +21,9 @@ void push_vector(VectorList* list, Vector* vector) {
     list->items[list->size++] = vector;
 }
 
-void remove_vector(VectorList* list, unsigned int index) {
+void removeVector(VectorList* list, unsigned int index) {
     if (index >= list->size) return;
-    free_vector(list->items[index]);
+    freeVector(list->items[index]);
     for (unsigned int i = index; i < list->size - 1; i++) {
         list->items[i] = list->items[i + 1];
     }
@@ -31,14 +31,14 @@ void remove_vector(VectorList* list, unsigned int index) {
 }
 
 void startInterface() {
-    VectorList* vector_list = create_vector_list();
+    VectorList* vector_list = createVectorList();
     VectorErrors operation_result;
 
     while (1) {
         printf("\nChoose operation:\n");
         printf("1 - Addition\n");
         printf("2 - Scalar Product\n");
-        printf("3 - Norm\n");
+        printf("3 - ABS\n");
         printf("4 - Show all vectors\n");
         printf("5 - Modify a vector\n");
         printf("6 - Add a vector\n");
@@ -72,13 +72,13 @@ void startInterface() {
                     vector_list->items[index1]->size,
                     &operation_result
                 );
-                if (errors_handler(add_vectors(vector_list->items[index1], vector_list->items[index2], add_result))) {
+                if (errorsHandler(addVectors(vector_list->items[index1], vector_list->items[index2], add_result))) {
                     break;
                 }
 
                 printf("Result of addition:\n");
-                print_vector(add_result);
-                free_vector(add_result);
+                printVector(add_result);
+                freeVector(add_result);
                 break;
 
             case 2: // Scalar Product
@@ -94,7 +94,7 @@ void startInterface() {
 
                 index1--; index2--;
                 void* scalar_result = malloc(vector_list->items[index1]->typeInfo->size);
-                if (errors_handler(multiply_vectors(vector_list->items[index1], vector_list->items[index2], scalar_result))) {
+                if (errorsHandler(multiplyVectors(vector_list->items[index1], vector_list->items[index2], scalar_result))) {
                     break;
                 }
 
@@ -104,7 +104,7 @@ void startInterface() {
                 free(scalar_result);
                 break;
 
-            case 3: { // Norm
+            case 3: { // ABS
                 if (vector_list->size == 0) {
                     printf("No vectors available.\n");
                     break;
@@ -117,11 +117,11 @@ void startInterface() {
                 }
 
                 double pre_norm = 0;
-                if (errors_handler(find_abs(vector_list->items[idx - 1], &pre_norm))) {
+                if (errorsHandler(findAbs(vector_list->items[idx - 1], &pre_norm))) {
                     break;
                 }
 
-                printf("Vector norm: %.4lf\n", sqrt(pre_norm));
+                printf("Vector ABS: %.4lf\n", sqrt(pre_norm));
                 break;
             }
 
@@ -133,7 +133,7 @@ void startInterface() {
 
                 for (unsigned int i = 0; i < vector_list->size; i++) {
                     printf("Vector %u:\n", i + 1);
-                    print_vector(vector_list->items[i]);
+                    printVector(vector_list->items[i]);
                     printf("\n");
                 }
                 break;
@@ -199,7 +199,7 @@ void startInterface() {
                     }
                 }
 
-                if (errors_handler(rewrite_vector(new_typeInfo, vector_list->items[index1], new_size, new_data))) {
+                if (errorsHandler(rewriteVector(new_typeInfo, vector_list->items[index1], new_size, new_data))) {
                     break;
                 }
 
@@ -257,8 +257,8 @@ void startInterface() {
                 }
 
                 Vector* new_vector = createVector(type_info, data, size, &operation_result);
-                if (errors_handler(operation_result)) break;
-                push_vector(vector_list, new_vector);
+                if (errorsHandler(operation_result)) break;
+                pushVector(vector_list, new_vector);
                 printf("Vector added successfully.\n");
                 break;
             }
@@ -275,7 +275,7 @@ void startInterface() {
                     while (getchar() != '\n');
                 }
 
-                remove_vector(vector_list, index1 - 1);
+                removeVector(vector_list, index1 - 1);
                 printf("Vector removed.\n");
                 break;
             }
@@ -283,7 +283,7 @@ void startInterface() {
             case 8: // Exit
                 printf("Goodbye!\n");
                 for (unsigned int i = 0; i < vector_list->size; i++) {
-                    free_vector(vector_list->items[i]);
+                    freeVector(vector_list->items[i]);
                 }
                 free(vector_list->items);
                 free(vector_list);

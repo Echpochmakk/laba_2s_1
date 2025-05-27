@@ -25,7 +25,7 @@ static const VectorErrorEntry vector_error_table[] = {
     { DIFFERENT_LENGHT_VECTORS,     "ERROR: different length of vectors." }
 };
 
-static const char* get_vector_error_message(VectorErrors code) {
+static const char* getVectorErrorMessage(VectorErrors code) {
     size_t count = sizeof(vector_error_table) / sizeof(vector_error_table[0]);
     for (size_t i = 0; i < count; ++i) {
         if (vector_error_table[i].code == code) {
@@ -35,9 +35,9 @@ static const char* get_vector_error_message(VectorErrors code) {
     return "ERROR: unknown error.";
 }
 
-static inline int errors_handler(VectorErrors operation_result) {
+static inline int errorsHandler(VectorErrors operation_result) {
     if (operation_result != VECTOR_OPERATION_OK) {
-        fprintf(stderr, "%s\n", get_vector_error_message(operation_result));
+        fprintf(stderr, "%s\n", getVectorErrorMessage(operation_result));
         return 1;
     }
     return 0;

@@ -8,12 +8,13 @@ typedef struct {
     double imag;
 } Complex;
 
-static TypeInfo* COMPLEX_TYPE_INFO = NULL;
+extern TypeInfo* COMPLEX_TYPE_INFO;
+
 
 void complexAdd(const void* arg1, const void* arg2, void* result);
 void complexMultiply(const void* arg1, const void* arg2, void* result);
 void complexPrint(const void* data);
-void complexabs(const void* arg, void* result);
+void complexAbs(const void* arg, void* result);
 TypeInfo* GetComplexTypeInfo();
 
 #endif 

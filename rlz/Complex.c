@@ -1,6 +1,10 @@
+#include "Complex.h"
+#include "TypeInfo.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "Complex.h"
+
+TypeInfo* COMPLEX_TYPE_INFO = NULL; 
+
 
 void complexAdd(const void* arg1, const void* arg2, void* result) {
     Complex* c1 = (Complex*)arg1;
@@ -26,7 +30,7 @@ void complexPrint(const void* data) {
     printf("%.3lf + %.3lfi", c->real, c->imag);
 }
 
-void complexabs(const void* arg, void* result){
+void complexAbs(const void* arg, void* result){
     Complex* c1 = (Complex*)arg;
     Complex* absResult = (Complex*)result;
 
@@ -42,7 +46,7 @@ TypeInfo* GetComplexTypeInfo() {
         COMPLEX_TYPE_INFO->add = complexAdd;
         COMPLEX_TYPE_INFO->multiply = complexMultiply;
         COMPLEX_TYPE_INFO->print = complexPrint;
-        COMPLEX_TYPE_INFO->abs = complexabs;
+        COMPLEX_TYPE_INFO->abs = complexAbs;
     }
     return COMPLEX_TYPE_INFO;
 }

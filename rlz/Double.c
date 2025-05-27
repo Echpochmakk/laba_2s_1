@@ -13,7 +13,7 @@ void doublePrint(const void* data) {
     printf("%.3lf", *(const double*)data);
 }
 
-void doubleabs(const void* arg, void* result){
+void doubleAbs(const void* arg, void* result){
     double* d1 = (double*)arg;
     double* absResult = (double*)result;
 
@@ -28,7 +28,7 @@ TypeInfo* GetDoubleTypeInfo() {
         DOUBLE_TYPE_INFO->add = doubleAdd;
         DOUBLE_TYPE_INFO->multiply = doubleMultiply;
         DOUBLE_TYPE_INFO->print = doublePrint;
-        DOUBLE_TYPE_INFO->abs = doubleabs;
+        DOUBLE_TYPE_INFO->abs = doubleAbs;
     }
     return DOUBLE_TYPE_INFO;
 }

@@ -28,14 +28,14 @@ Vector* createVector(TypeInfo* typeInfo, void *data, int size, VectorErrors* ope
     return vector;
 }
 
-void free_vector(Vector* v) {
+void freeVector(Vector* v) {
     if (v) {
         free(v->data);
         free(v);
     }
 }
 
-VectorErrors add_vectors(const Vector* v1, const Vector* v2, Vector* result) {
+VectorErrors addVectors(const Vector* v1, const Vector* v2, Vector* result) {
     if (v1 == NULL || v2 == NULL || result == NULL) return VECTOR_NOT_DEFINED;
     if (v1->typeInfo != v2->typeInfo || v1->typeInfo != result->typeInfo) return INCOMPATIBLE_VECTOR_TYPES;
     if (v1->size != v2->size) return DIFFERENT_LENGHT_VECTORS;
@@ -52,7 +52,7 @@ VectorErrors add_vectors(const Vector* v1, const Vector* v2, Vector* result) {
     return VECTOR_OPERATION_OK;
 }
 
-VectorErrors multiply_vectors(const Vector* v1, const Vector* v2, void* result) {
+VectorErrors multiplyVectors(const Vector* v1, const Vector* v2, void* result) {
     if (v1 == NULL || v2 == NULL || result == NULL) return VECTOR_NOT_DEFINED;
     if (v1->typeInfo != v2->typeInfo) return INCOMPATIBLE_VECTOR_TYPES;
     if (v1->size != v2->size) return DIFFERENT_LENGHT_VECTORS;
@@ -73,7 +73,7 @@ VectorErrors multiply_vectors(const Vector* v1, const Vector* v2, void* result) 
 
 
 
-VectorErrors print_vector(const Vector* vector) {
+VectorErrors printVector(const Vector* vector) {
     if (vector == NULL) return VECTOR_NOT_DEFINED;
     if (vector->typeInfo->print == NULL) return OPERATION_NOT_DEFINED;
 
@@ -89,7 +89,7 @@ VectorErrors print_vector(const Vector* vector) {
     return VECTOR_OPERATION_OK;
 }
 
-VectorErrors find_abs(const Vector* vector, void* result){
+VectorErrors findAbs(const Vector* vector, void* result){
     if (vector == NULL || result == NULL) return VECTOR_NOT_DEFINED;
     if (vector->typeInfo->abs == NULL) return OPERATION_NOT_DEFINED;
     
@@ -101,7 +101,7 @@ VectorErrors find_abs(const Vector* vector, void* result){
     return VECTOR_OPERATION_OK;
 }
 
-VectorErrors rewrite_vector(TypeInfo* new_typeInfo, Vector *v, int new_size, void *new_data){
+VectorErrors rewriteVector(TypeInfo* new_typeInfo, Vector *v, int new_size, void *new_data){
     if (v == NULL || new_data == NULL) return VECTOR_NOT_DEFINED;
     free(v->data);
     v->typeInfo = new_typeInfo;
